@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 const Signin = () => {
   return (
@@ -8,9 +9,16 @@ const Signin = () => {
       <Navbar />
       <section className="text-gray-600 body-font flex justify-center items-center w-1/2 mx-auto mt-5 h-[90vh]">
         <div className=" bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
-          <h2 className="text-gray-900 text-2xl title-font mb-5">
+          <h2 className="text-gray-900 text-2xl title-font mb-2">
             Sign in to your account
           </h2>
+
+          <p className="my-2">
+            New user?{' '}
+            <span className="text-purple-500 cursor-pointer font-bold">
+              <Link to="/signup">Signup</Link>
+            </span>
+          </p>
 
           <div className="relative mb-4">
             <label htmlFor="email" className="leading-7 text-sm text-gray-600">

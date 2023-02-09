@@ -101,6 +101,12 @@ const Signup = () => {
           <h2 className="text-gray-900 text-2xl title-font mb-5">
             Create an account
           </h2>
+          <p className="my-2">
+            Already have an account?{' '}
+            <span className="text-purple-500 cursor-pointer font-bold">
+              <Link to="/signin">Signin</Link>
+            </span>
+          </p>
           <div className="relative mb-4">
             <label
               htmlFor="full-name"
