@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+
+import { signin, isAuthenticated, authenticate } from '../auth/helper';
 
 const Signin = () => {
   const initialState = {
@@ -11,13 +13,50 @@ const Signin = () => {
     loading: false,
     didRedirect: false,
   };
-
+  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState('');
+  const { user } = isAuthenticated();
   const [formValues, setFormValues] = useState(initialState);
   const { email, password, error, loading, didRedirect } = formValues;
 
   const handleSignin = (e) => {
     e.preventDefault();
-    console.log(formValues);
+    // console.log(formValues);
+    setFormValues({ ...formValues, error: false, loading: true });
+    setMessage('Loading...');
+    signin({ email, password }).then((data) => {
+      if (data.error) {
+        setFormValues({ ...formValues, error: data.err, loading: false });
+        setMessage(`Student login failed: ${error}`);
+        setSuccess(false);
+      } else {
+        authenticate(data, () => {
+          setFormValues({
+            ...formValues,
+            email: '',
+            password: '',
+            error: '',
+            loading: false,
+            didRedirect: true,
+          });
+        });
+        setMessage(`Student login successfull!`);
+        setSuccess(true);
+      }
+    });
+  };
+
+  const performRedirect = () => {
+    if (didRedirect) {
+      if (user && user.role === 0) {
+        return <Redirect to="/dashboard" />;
+      } else {
+        return <Redirect to="/admin/dashboard" />;
+      }
+    }
+    if (isAuthenticated()) {
+      return <Redirect to="/" />;
+    }
   };
 
   const handleChange = (field) => (e) => {
@@ -25,6 +64,7 @@ const Signin = () => {
   };
   return (
     <>
+      {performRedirect()}
       <Navbar />
       <section className="text-gray-600 body-font flex justify-center items-center w-1/2 mx-auto mt-5 h-[90vh]">
         <form
@@ -35,6 +75,7 @@ const Signin = () => {
             <h2 className="text-gray-900 text-2xl title-font mb-2">
               Sign in to your account
             </h2>
+            <p className={`text-3xl font-extrabold`}>{message}</p>
 
             <p className="my-2">
               New user?{' '}

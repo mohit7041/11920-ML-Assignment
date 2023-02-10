@@ -1,11 +1,13 @@
-import React from "react";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Services from "./pages/Services";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Contact from "./pages/Contact";
-import Signin from "./pages/Signin";
-import Signup from "./pages/Signup";
+import React from 'react';
+import Home from './pages/Home';
+import About from './pages/About';
+import Services from './pages/Services';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Contact from './pages/Contact';
+import Signin from './pages/Signin';
+import Signup from './pages/Signup';
+import PrivateRoute from './auth/helper/PrivateRoute';
+import Dashboard from './pages/Dashboard';
 
 const Routes = () => {
   return (
@@ -17,6 +19,7 @@ const Routes = () => {
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/signin" component={Signin} />
         <Route exact path="/signup" component={Signup} />
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
       </Switch>
     </Router>
   );
