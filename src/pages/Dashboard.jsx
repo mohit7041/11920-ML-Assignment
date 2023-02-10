@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getCurrentUser } from '../auth/helper';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const [user, setUser] = useState('');
@@ -24,7 +25,7 @@ const Dashboard = () => {
             >
               <span class="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-purple-600 group-hover:h-full opacity-90"></span>
               <span class="relative group-hover:text-white">
-                Take Assessment
+                <Link to="/quiz">Take Assessment</Link>
               </span>
             </a>
           </div>
