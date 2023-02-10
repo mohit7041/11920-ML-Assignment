@@ -18,30 +18,26 @@ const Home = () => {
       <Navbar />
 
       <section class="text-gray-600 body-font">
-        <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center h-[90vh] heroSection">
+        <div class="container mx-auto flex px-5 py-24  flex-col items-center justify-center h-[90vh] heroSection">
           <div class="lg:flex-grow md:w-1/2  flex flex-col md:items-start md:text-left items-center text-center">
-            <h3
-              class="title-font sm:text-xl mb-8 text-center  w-full "
-              style={{
-                fontSize: '1.5rem',
-              }}
-            >
+            <h3 class="sm:text-[2em] md:text-[2em] text-[1em] mb-8 text-center  w-full ">
               Explore the Career Options
             </h3>
             <h1
-              class="title-font sm:text-4xl mb-8 font-medium  text-center  w-full "
+              class="md:text-[4em] sm:text-[4em] text-[1.5em] mb-8  text-center  w-full"
               style={{
-                fontSize: '4rem',
+                lineHeight: '1.2',
               }}
             >
               A WONDERFUL PATH
             </h1>
 
-            <div class="flex justify-center items-center">
-              <button class="inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg text-center ml-[35rem] ">
-                <a href="#engineering">Explore Now</a>
-              </button>
-            </div>
+            <a
+              href="#engineering"
+              className="inline-block text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-xs text-center justify-self-center mx-auto sm:text-base md:text-lg"
+            >
+              Explore Now
+            </a>
           </div>
         </div>
         <div

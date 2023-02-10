@@ -9,6 +9,7 @@ const Dashboard = () => {
     // get user info from local storage
     const user = getCurrentUser().user;
     setUser(user);
+    console.log(user);
   }, []);
   return (
     <>
