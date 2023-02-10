@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { signout, isAuthenticated } from '../auth/helper';
 
-const Navbar = () => {
+const Navbar = ({ history }) => {
   return (
     <header class="text-gray-600 body-font h-[10vh] z-30 mb-5">
       <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -35,17 +36,41 @@ const Navbar = () => {
           <a class="mr-5 hover:text-gray-900 cursor-pointer">
             <Link to="/contact">Contact</Link>
           </a>
+          {isAuthenticated() && isAuthenticated().user.role === 0 && (
+            <a class="mr-5 hover:text-gray-900 cursor-pointer">
+              <Link to="/dashboard">Dashboard</Link>
+            </a>
+          )}
         </nav>
-        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mx-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
-          <Link to="/signin">Signin</Link>
-        </button>
+        {!isAuthenticated() && (
+          <>
+            <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 mx-3 focus:outline-none  rounded text-md mt-4 md:mt-0 hover:bg-purple-600 hover:text-white">
+              <Link to="/signin">Signin</Link>
+            </button>
 
-        <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
-          <Link to="/signup">Signup</Link>
-        </button>
+            <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none  rounded text-base mt-4 md:mt-0 hover:bg-purple-600 hover:text-white">
+              <Link to="/signup">Signup</Link>
+            </button>
+          </>
+        )}
+
+        {isAuthenticated() && (
+          <>
+            <button
+              class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-purple-600 hover:text-white rounded text-base mt-4 md:mt-0"
+              onClick={() => {
+                signout(() => {
+                  history.push('/');
+                });
+              }}
+            >
+              Signout
+            </button>
+          </>
+        )}
       </div>
     </header>
   );
 };
 
-export default Navbar;
+export default withRouter(Navbar);
