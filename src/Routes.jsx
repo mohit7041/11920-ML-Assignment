@@ -8,6 +8,7 @@ import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import PrivateRoute from './auth/helper/PrivateRoute';
 import Dashboard from './pages/Dashboard';
+// import Result from './components/Result';
 
 const Routes = () => {
   return (
@@ -19,6 +20,7 @@ const Routes = () => {
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/signin" component={Signin} />
         <Route exact path="/signup" component={Signup} />
+        {/* <Route exact path="/result" component={Result} /> */}
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
       </Switch>
     </Router>

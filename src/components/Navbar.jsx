@@ -36,6 +36,9 @@ const Navbar = ({ history }) => {
           <a class="mr-5 hover:text-gray-900 cursor-pointer">
             <Link to="/contact">Contact</Link>
           </a>
+          {/* <a class="mr-5 hover:text-gray-900 cursor-pointer">
+            <Link to="/result">Result</Link>
+          </a> */}
           {isAuthenticated() && isAuthenticated().user.role === 0 && (
             <a class="mr-5 hover:text-gray-900 cursor-pointer">
               <Link to="/dashboard">Dashboard</Link>
