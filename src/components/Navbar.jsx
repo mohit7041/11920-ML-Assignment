@@ -30,7 +30,7 @@ const Navbar = () => {
             <Link to="/about">About</Link>
           </a>
           <a class="mr-5 hover:text-gray-900 cursor-pointer">
-            <Link to="/services">Services</Link>
+            <Link to="/signup">Assessment</Link>
           </a>
           <a class="mr-5 hover:text-gray-900 cursor-pointer">
             <Link to="/contact">Contact</Link>
