@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
+import { signup } from '../auth/helper';
 
 const Signup = () => {
   const initialFormState = {
@@ -13,6 +14,7 @@ const Signup = () => {
     error: true,
     success: false,
   };
+  const [message, setMessage] = useState('hello');
   const [formValues, setFormValues] = useState(initialFormState);
 
   const { fullName, email, password, sscMarks, hscMarks, error, success } =
@@ -35,7 +37,31 @@ const Signup = () => {
     const sscMarksNum = Number(sscMarks);
     const hscMarksNum = Number(hscMarks);
 
-    console.log(formValues);
+    // console.log(formValues);
+
+    signup({ fullName, email, password, hscMarksNum, sscMarksNum })
+      .then((data) => {
+        if (data.error) {
+          setFormValues({ ...formValues, error: data.err, success: false });
+          setMessage(`Student Signup Failed! Error: ${error}`);
+        } else {
+          setFormValues({
+            ...formValues,
+            fullName: '',
+            email: '',
+            password: '',
+            hsc: '',
+            ssc: '',
+            error: '',
+            success: true,
+          });
+          setMessage('Student Signup Successful!');
+        }
+      })
+      .catch((err) => {
+        console.log('Error in signing up');
+        console.error(err);
+      });
   };
   return (
     <>
@@ -50,6 +76,13 @@ const Signup = () => {
             <h2 className="text-gray-900 text-2xl title-font mb-5">
               Create an account
             </h2>
+            <p
+              className={`text-3xl font-extrabold ${
+                success ? 'text-purple-600' : 'text-red-600'
+              }`}
+            >
+              {message}
+            </p>
             <p className="my-2">
               Already have an account?{' '}
               <span className="text-purple-500 cursor-pointer font-bold">
