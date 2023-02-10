@@ -9,6 +9,7 @@ import Signup from './pages/Signup';
 import PrivateRoute from './auth/helper/PrivateRoute';
 import Dashboard from './pages/Dashboard';
 import Engineering from './pages/Engineering';
+import Doctor from './pages/Doctor';
 // import Result from './components/Result';
 
 const Routes = () => {
@@ -22,6 +23,7 @@ const Routes = () => {
         <Route exact path="/signin" component={Signin} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/about/engineering" component={Engineering} />
+        <Route exact path="/about/doctor" component={Doctor} />
         {/* <Route exact path="/result" component={Result} /> */}
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
       </Switch>
