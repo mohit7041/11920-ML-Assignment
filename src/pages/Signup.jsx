@@ -145,7 +145,7 @@ const Signup = () => {
                 onChange={handleChange('password')}
               />
             </div>
-            <div className="relative mb-4">
+            {/* <div className="relative mb-4">
               <label
                 htmlFor="email"
                 className="leading-7 text-sm text-gray-600"
@@ -162,8 +162,8 @@ const Signup = () => {
                 value={sscMarks}
                 onChange={handleChange('sscMarks')}
               />
-            </div>
-            <div className="relative mb-4">
+            </div> */}
+            {/* <div className="relative mb-4">
               <label
                 htmlFor="email"
                 className="leading-7 text-sm text-gray-600"
@@ -180,7 +180,7 @@ const Signup = () => {
                 value={hscMarks}
                 onChange={handleChange('hscMarks')}
               />
-            </div>
+            </div> */}
             <button
               type="submit"
               className="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
