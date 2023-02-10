@@ -14,7 +14,7 @@ const Signup = () => {
     error: true,
     success: false,
   };
-  const [message, setMessage] = useState('hello');
+  const [message, setMessage] = useState('');
   const [formValues, setFormValues] = useState(initialFormState);
 
   const { fullName, email, password, sscMarks, hscMarks, error, success } =
