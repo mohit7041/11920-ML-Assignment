@@ -1,54 +1,120 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import { FormControl, FormLabel, Slider, Typography } from '@mui/material';
 import Question from '../components/Question';
+// import csvwriter
+import { createObjectCsvWriter } from 'csv-writer';
+import { CSVLink } from 'react-csv';
+
+import axios from 'axios';
+import * as tf from '@tensorflow/tfjs';
 
 const Quiz = () => {
   const initialState = {
-    question1: 0,
-    question2: 0,
-    question3: 0,
-    question4: 0,
-    question5: 0,
-    question6: 0,
-    question7: 0,
-    question8: 0,
-    question9: 0,
-    question10: 0,
-    question11: 0,
-    question12: 0,
-    question13: 0,
-    question14: 0,
-    question15: 0,
-    question16: 0,
-    question17: 0,
-    question18: 0,
-    question19: 0,
-    question20: 0,
-    question21: 0,
-    question22: 0,
-    question23: 0,
-    question24: 0,
-    question25: 0,
-    question26: 0,
-    question27: 0,
-    question28: 0,
-    question29: 0,
-    question30: 0,
-    question31: 0,
-    question32: 0,
-    question33: 0,
-    question34: 0,
-    question35: 0,
+    activeLearning: 0,
+    activeListening: 0,
+    complexProblemSolving: 0,
+    coordination: 0,
+    criticalThinking: 0,
+    equipmentMaintenance: 0,
+    equipmentSelection: 0,
+    installation: 0,
+    intructing: 0,
+    judgmentAndDecisionMaking: 0,
+    learningStrategies: 0,
+    managementOfFinancialResources: 0,
+    managementOfMaterialResources: 0,
+    managementOfPersonnelResources: 0,
+    mathematics: 0,
+    monitoring: 0,
+    negotiation: 0,
+    operationAndControl: 0,
+    operationAnalysis: 0,
+    operationMonitoring: 0,
+    persuasion: 0,
+    programming: 0,
+    qualityControlAnalysis: 0,
+    readingComprehension: 0,
+    repairing: 0,
+    science: 0,
+    serviceOrientation: 0,
+    socialPerceptiveness: 0,
+    speaking: 0,
+    systemAnalysis: 0,
+    systemEvaluation: 0,
+    technologyDesign: 0,
+    timeManagement: 0,
+    troubleshooting: 0,
+    writing: 0,
   };
+
+  const [model, setModel] = useState(null);
+
+  const [success, setSuccess] = useState(false);
 
   const [answers, setAnswers] = useState(initialState);
 
+  const allValuesZero = Object.values(answers).every((value) => value === 0);
+
+  // check if all values are hundred
+  const allValuesHundred = Object.values(answers).every(
+    (value) => value === 100
+  );
+  const [jsonData, setJsonData] = useState('');
+
+  // get model from drive
+  const getModel = async () => {
+    const response = await axios.get(
+      'https://drive.google.com/uc?id=1pBD8ZXKbuenQSwUBnA43-bzqBwBHCdrM',
+      {
+        responseType: 'arraybuffer',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
+    );
+    return response;
+  };
+
+  useEffect(() => {
+    // axios
+    //   .get('https://drive.google.com/uc?id=1pBD8ZXKbuenQSwUBnA43-bzqBwBHCdrM', {
+    //     responseType: 'arraybuffer',
+    //     headers: {
+    //       'Access-Control-Allow-Origin': '*',
+    //     },
+    //   })
+    //   .then((response) => {
+    //     setModel(tf.loadLayersModel(new Uint8Array(response.data)));
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+    getModel();
+  }, []);
+
+  console.log(model);
+
   const handleForm = (e) => {
     e.preventDefault();
+    if (allValuesZero) {
+      alert('Please fill the form');
+    }
+
+    if (allValuesHundred) {
+      alert(
+        'According to input given you are eligible for every field but as per our suggestion you should pursue arts,design,entertainment,sports and media occupation or go to mars.'
+      );
+    }
     console.log(answers);
+    setSuccess(true);
+    console.log(JSON.stringify(answers));
+    setJsonData(JSON.stringify(answers));
+
+    setAnswers(initialState);
   };
+
   const handleChange = (question) => (event, newValue) => {
     setAnswers({ ...answers, [question]: newValue });
   };
@@ -78,213 +144,213 @@ const Quiz = () => {
         <form>
           <Question
             info="Understanding written sentences and paragraphs in work-related documents."
-            value={answers.question1}
+            value={answers.readingComprehension}
             category="1. Reading Comprehension"
-            onChange={handleChange('question1')}
+            onChange={handleChange('readingComprehension')}
           />
           <Question
             info="Giving full attention to what other people are saying, taking time to understand the points being made, asking questions as appropriate, and not interrupting at inappropriate times."
-            value={answers.question2}
+            value={answers.activeListening}
             category="2. Active Listening"
-            onChange={handleChange('question2')}
+            onChange={handleChange('activeListening')}
           />
           <Question
             info="Communicating effectively in writing as appropriate for the needs of the audience."
-            value={answers.question3}
+            value={answers.writing}
             category="3. Writing"
-            onChange={handleChange('question3')}
+            onChange={handleChange('writing')}
           />
           <Question
             info="Talking to others to convey information effectively."
-            value={answers.question4}
+            value={answers.speaking}
             category="4. Speaking"
-            onChange={handleChange('question4')}
+            onChange={handleChange('speaking')}
           />
           <Question
             info="Using mathematics to solve problems."
-            value={answers.question5}
+            value={answers.mathematics}
             category="5. Mathematics"
-            onChange={handleChange('question5')}
+            onChange={handleChange('mathematics')}
           />
           <Question
             info="Using scientific rules and methods to solve problems."
-            value={answers.question6}
+            value={answers.science}
             category="6. Science"
-            onChange={handleChange('question6')}
+            onChange={handleChange('science')}
           />
           <Question
             info="Using logic and reasoning to identify the strengths and weaknesses of alternative solutions, conclusions, or approaches to problems."
-            value={answers.question7}
+            value={answers.criticalThinking}
             category="7. Critical Thinking"
-            onChange={handleChange('question7')}
+            onChange={handleChange('criticalThinking')}
           />
           <Question
             info="Understanding the implications of new information for both current and future problem solving and decision-making."
-            value={answers.question8}
+            value={answers.activeLearning}
             category="8. Active Learning"
-            onChange={handleChange('question8')}
+            onChange={handleChange('activeLearning')}
           />
           <Question
             info="Selecting and using training/instructional methods and procedures appropriate for the situation when learning or teaching new things."
-            value={answers.question9}
+            value={answers.learningStrategies}
             category="9. Learning Strategies"
-            onChange={handleChange('question9')}
+            onChange={handleChange('learningStrategies')}
           />
           <Question
             info="Monitoring/assessing performance of yourself, other individuals, or organizations to make improvements or take corrective action."
-            value={answers.question10}
+            value={answers.monitoring}
             category="10.	Monitoring"
-            onChange={handleChange('question10')}
+            onChange={handleChange('monitoring')}
           />
           <Question
             info="Being aware of others’ reactions and understanding why they react as they do."
-            value={answers.question11}
+            value={answers.socialPerceptiveness}
             category="11. Social Perceptiveness"
-            onChange={handleChange('question11')}
+            onChange={handleChange('socialPerceptiveness')}
           />
           <Question
             info="Adjusting actions in relation to others’ actions."
-            value={answers.question12}
+            value={answers.coordination}
             category="12.	Coordination"
-            onChange={handleChange('question12')}
+            onChange={handleChange('coordination')}
           />
           <Question
             info="Persuading others to change their minds or behavior."
-            value={answers.question13}
+            value={answers.persuasion}
             category="13.	Persuasion"
-            onChange={handleChange('question13')}
+            onChange={handleChange('persuasion')}
           />
           <Question
             info="MBringing others together and trying to reconcile differences."
-            value={answers.question14}
+            value={answers.negotiation}
             category="14.	Negotiation"
-            onChange={handleChange('question14')}
+            onChange={handleChange('negotiation')}
           />
           <Question
             info="Teaching others how to do something."
-            value={answers.question15}
+            value={answers.intructing}
             category="15.	Instructing"
-            onChange={handleChange('question15')}
+            onChange={handleChange('intructing')}
           />
           <Question
             info="Actively looking for ways to help people."
-            value={answers.question16}
+            value={answers.serviceOrientation}
             category="16.	Service Orientation"
-            onChange={handleChange('question16')}
+            onChange={handleChange('serviceOrientation')}
           />
           <Question
             info="Identifying complex problems and reviewing related information to develop and evaluate options and implement solutions."
-            value={answers.question17}
+            value={answers.complexProblemSolving}
             category="17.	Complex Problem Solving"
-            onChange={handleChange('question17')}
+            onChange={handleChange('complexProblemSolving')}
           />
           <Question
             info="Analyzing needs and product requirements to create a design."
-            value={answers.question18}
+            value={answers.operationAnalysis}
             category="18.	Operations Analysis"
-            onChange={handleChange('question18')}
+            onChange={handleChange('operationAnalysis')}
           />
           <Question
             info="Generating or adapting equipment and technology to serve user needs."
-            value={answers.question19}
+            value={answers.technologyDesign}
             category="19. Technology Design"
-            onChange={handleChange('question19')}
+            onChange={handleChange('technologyDesign')}
           />
           <Question
             info="Determining the kind of tools and equipment needed to do a job."
-            value={answers.question20}
+            value={answers.equipmentSelection}
             category="20. Equipment Selection"
-            onChange={handleChange('question20')}
+            onChange={handleChange('equipmentSelection')}
           />
           <Question
             info="Installing equipment, machines, wiring, or programs to meet specifications."
-            value={answers.question21}
+            value={answers.installation}
             category="21.	Installation"
-            onChange={handleChange('question21')}
+            onChange={handleChange('installation')}
           />
           <Question
             info="DWriting computer programs for various purposes."
-            value={answers.question22}
+            value={answers.programming}
             category="22.	Programming"
-            onChange={handleChange('question22')}
+            onChange={handleChange('programming')}
           />
           <Question
             info="Conducting tests and inspections of products, services, or processes to evaluate quality or performance."
-            value={answers.question23}
+            value={answers.qualityControlAnalysis}
             category="23. Quality Control Analysis"
-            onChange={handleChange('question23')}
+            onChange={handleChange('qualityControlAnalysis')}
           />
           <Question
             info="Watching gauges, dials, or other indicators to make sure a machine is working properly."
-            value={answers.question24}
+            value={answers.operationMonitoring}
             category="24.	Operations Monitoring"
-            onChange={handleChange('question24')}
+            onChange={handleChange('operationMonitoring')}
           />
           <Question
             info="Controlling operations of equipment or systems."
-            value={answers.question25}
+            value={answers.operationAndControl}
             category="25.	Operation and Control"
-            onChange={handleChange('question25')}
+            onChange={handleChange('operationAndControl')}
           />
           <Question
             info="Performing routine maintenance on equipment and determining when and what kind of maintenance is needed."
-            value={answers.question26}
+            value={answers.equipmentMaintenance}
             category="26.	Equipment Maintenance"
-            onChange={handleChange('question26')}
+            onChange={handleChange('equipmentMaintenance')}
           />
           <Question
             info="Determining causes of operating errors and deciding what to do about it."
-            value={answers.question27}
+            value={answers.troubleshooting}
             category="27.	Troubleshooting"
-            onChange={handleChange('question27')}
+            onChange={handleChange('troubleshooting')}
           />
           <Question
             info="Repairing machines or systems using the needed tools."
-            value={answers.question28}
+            value={answers.repairing}
             category="28.	Repairing"
-            onChange={handleChange('question28')}
+            onChange={handleChange('repairing')}
           />
           <Question
             info="Determining how a system should work and how changes in conditions, operations, and the environment will affect outcomes."
-            value={answers.question29}
+            value={answers.systemAnalysis}
             category="29.	Systems Analysis"
-            onChange={handleChange('question29')}
+            onChange={handleChange('systemAnalysis')}
           />
           <Question
             info="Identifying measures or indicators of system performance and the actions needed to improve or correct performance, relative to the goals of the system."
-            value={answers.question30}
+            value={answers.systemEvaluation}
             category="30.	Systems Evaluation"
-            onChange={handleChange('question30')}
+            onChange={handleChange('systemEvaluation')}
           />
           <Question
             info="Considering the relative costs and benefits of potential actions to choose the most appropriate one."
-            value={answers.question31}
+            value={answers.judgmentAndDecisionMaking}
             category="31.	Judgment and Decision Making"
-            onChange={handleChange('question31')}
+            onChange={handleChange('judgmentAndDecisionMaking')}
           />
           <Question
             info="Managing one’s own time and the time of others."
-            value={answers.question32}
+            value={answers.timeManagement}
             category="32.	Time Management"
-            onChange={handleChange('question32')}
+            onChange={handleChange('timeManagement')}
           />
           <Question
             info="Determining how money will be spent to get the work done, and accounting for these expenditures."
-            value={answers.question33}
+            value={answers.managementOfFinancialResources}
             category="33.	Management of Financial Resources"
-            onChange={handleChange('question33')}
+            onChange={handleChange('managementOfFinancialResources')}
           />
           <Question
             info="Obtaining and seeing to the appropriate use of equipment, facilities, and materials needed to do certain work."
-            value={answers.question34}
+            value={answers.managementOfMaterialResources}
             category="34.	Management of Material Resources"
-            onChange={handleChange('question34')}
+            onChange={handleChange('managementOfMaterialResources')}
           />
           <Question
             info="Motivating, developing, and directing people as they work, identifying the best people for the job."
-            value={answers.question35}
+            value={answers.managementOfPersonnelResources}
             category="35.	Management of Personnel Resources"
-            onChange={handleChange('question35')}
+            onChange={handleChange('managementOfPersonnelResources')}
           />
           <div className="text-center">
             <a
@@ -299,8 +365,6 @@ const Quiz = () => {
           </div>
         </form>
       </div>
-
-      <Footer />
     </>
   );
 };

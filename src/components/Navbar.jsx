@@ -31,7 +31,7 @@ const Navbar = ({ history }) => {
             <Link to="/about">About</Link>
           </a>
           <a class="mr-5 hover:text-gray-900 cursor-pointer">
-            <Link to="/signup">Assessment</Link>
+            <Link to="/assessment">Assessment</Link>
           </a>
           <a class="mr-5 hover:text-gray-900 cursor-pointer">
             <Link to="/contact">Contact</Link>
