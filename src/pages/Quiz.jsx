@@ -65,15 +65,12 @@ const Quiz = () => {
 
   // get model from drive
   const getModel = async () => {
-    const response = await axios.get(
-      'https://drive.google.com/uc?id=1pBD8ZXKbuenQSwUBnA43-bzqBwBHCdrM',
-      {
-        responseType: 'arraybuffer',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
-    );
+    const response = await axios.get('../ml/bagging_model.pkl', {
+      responseType: 'arraybuffer',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
     return response;
   };
 
