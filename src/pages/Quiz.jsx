@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
-import { FormControl, FormLabel, Slider, Typography } from '@mui/material';
+import {
+  FormControl,
+  FormLabel,
+  Slider,
+  TextField,
+  Typography,
+} from '@mui/material';
 import Question from '../components/Question';
 // import csvwriter
 import { createObjectCsvWriter } from 'csv-writer';
@@ -11,6 +17,7 @@ import axios from 'axios';
 import * as tf from '@tensorflow/tfjs';
 
 const Quiz = () => {
+  const [age, setAge] = useState(15);
   const initialState = {
     activeLearning: 0,
     activeListening: 0,
@@ -65,7 +72,7 @@ const Quiz = () => {
 
   // get model from drive
   const getModel = async () => {
-    const response = await axios.get('../ml/bagging_model.pkl', {
+    const response = await axios.get('../ml/model.joblib', {
       responseType: 'arraybuffer',
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -96,7 +103,7 @@ const Quiz = () => {
   const handleForm = (e) => {
     e.preventDefault();
     if (allValuesZero) {
-      alert('Please fill the form');
+      alert('Cannot submit. Please enter values > 0.');
     }
 
     if (allValuesHundred) {
